@@ -54,7 +54,6 @@
             width: 20px;
             margin-right: 5px;
             border-bottom-style: solid;
-            border-bottom-color: red;
         }
     </style>
 </head>
@@ -223,9 +222,14 @@
         const roadLegendHtml = `
             <div class="leaflet-legend-container">
                 <strong>Jenis Jalan</strong>
-                <div class="legend-line-container"><span class="legend-line" style="border-bottom-width: 4px;"></span> Jalan Propinsi</div>
-                <div class="legend-line-container"><span class="legend-line" style="border-bottom-width: 2.5px;"></span> Jalan Kabupaten</div>
-                <div class="legend-line-container"><span class="legend-line" style="border-bottom-width: 1.5px;"></span> Jalan Lain</div>
+                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 4px;"></span> Jalan Propinsi</div>
+                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 2.5px;"></span> Jalan Kabupaten</div>
+                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 1.5px;"></span> Jalan Lain</div>
+            </div>`;
+
+        const riverLegendHtml = `
+            <div class="leaflet-legend-container">
+                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: blue; border-bottom-width: 2px;"></span> Sungai</div>
             </div>`;
 
 
@@ -273,7 +277,14 @@
                 .then(data => {
                     var layer = L.geoJson(data, {
                         style: { color: 'blue', weight: 1 },
-                        pane: 'sungai_pane'
+                        pane: 'sungai_pane',
+                        onEachFeature: function (feature, layer) {
+                            if (feature.properties && feature.properties.LAYER) {
+                                layer.bindTooltip(feature.properties.LAYER, {
+                                    sticky: true
+                                });
+                            }
+                        }
                     }).addTo(map);
                     layerControl.addOverlay(layer, "Sungai");
                 }),
@@ -315,6 +326,11 @@
                 if (layerName === 'Jalan') {
                     const legendDiv = document.createElement('div');
                     legendDiv.innerHTML = roadLegendHtml;
+                    label.appendChild(legendDiv);
+                }
+                if (layerName === 'Sungai') {
+                    const legendDiv = document.createElement('div');
+                    legendDiv.innerHTML = riverLegendHtml;
                     label.appendChild(legendDiv);
                 }
             });
