@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
@@ -222,9 +223,9 @@
         const roadLegendHtml = `
             <div class="leaflet-legend-container">
                 <strong>Jenis Jalan</strong>
-                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 4px;"></span> Jalan Propinsi</div>
-                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 2.5px;"></span> Jalan Kabupaten</div>
-                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 1.5px;"></span> Jalan Lain</div>
+                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 3px;"></span> Jalan Propinsi</div>
+                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 2px;"></span> Jalan Kabupaten</div>
+                <div class="legend-line-container"><span class="legend-line" style="border-bottom-color: red; border-bottom-width: 1px;"></span> Jalan Lain</div>
             </div>`;
 
         const riverLegendHtml = `
@@ -246,7 +247,7 @@
                                 layer.bindTooltip(feature.properties.WADMKC, { sticky: true });
                                 layer.on('click', function (e) {
                                     var props = e.target.feature.properties;
-                                    var content = `<dl class="row"><dt class="col-sm-5">Kecamatan</dt><dd class="col-sm-7">${props.WADMKC}</dd><dt class="col-sm-5">Jumlah Penduduk</dt><dd class="col-sm-7">${props.Penduduk}</dd></dl>`;
+                                    var content = `<dl class="row"><dt class="col-sm-5">Kecamatan</dt><dd class="col-sm-7">${props.WADMKC}</dd><dt class="col-sm-5">Jumlah Penduduk</dt><dd class="col-sm-7"><i class="bi bi-people-fill"></i> ${props.Penduduk}</dd></dl>`;
                                     document.getElementById('kecamatanModalLabel').innerHTML = 'Detail Kecamatan';
                                     document.getElementById('kecamatanModalBody').innerHTML = content;
                                     new bootstrap.Modal(document.getElementById('kecamatanModal')).show();
